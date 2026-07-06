@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+#neo4j:
+#  uri: ${NEO4J_URI}
+#  username: ${NEO4J_USERNAME}
+#  password: ${NEO4J_PASSWORD}
+#
+#jwt:
+#  secret: ${JWT_SECRET}
+#  expiration-ms: 3600000
