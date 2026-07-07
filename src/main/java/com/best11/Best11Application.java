@@ -1,4 +1,4 @@
-package main.java.com.best11;
+package com.best11;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

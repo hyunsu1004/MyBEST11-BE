@@ -1,12 +1,25 @@
 spring:
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+  profiles:
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update    # 로컬에서는 Entity 기준으로 테이블 자동 생성/변경
     show-sql: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: validate  # 운영에서는 검증만, 스키마는 별도 관리
 
 #neo4j:
 #  uri: ${NEO4J_URI}
