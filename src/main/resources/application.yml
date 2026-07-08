@@ -1,6 +1,14 @@
 spring:
   profiles:
     active: local
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration-ms: 3600000
 
 ---
 spring:
@@ -9,8 +17,12 @@ spring:
       on-profile: local
   jpa:
     hibernate:
-      ddl-auto: update    # 로컬에서는 Entity 기준으로 테이블 자동 생성/변경
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
     show-sql: true
+  sql:
+    init:
+      mode: always
 
 ---
 spring:
@@ -19,13 +31,9 @@ spring:
       on-profile: prod
   jpa:
     hibernate:
-      ddl-auto: validate  # 운영에서는 검증만, 스키마는 별도 관리
+      ddl-auto: validate
 
-#neo4j:
-#  uri: ${NEO4J_URI}
-#  username: ${NEO4J_USERNAME}
-#  password: ${NEO4J_PASSWORD}
-#
-#jwt:
-#  secret: ${JWT_SECRET}
-#  expiration-ms: 3600000
+# neo4j:
+#   uri: ${NEO4J_URI}
+#   username: ${NEO4J_USERNAME}
+#   password: ${NEO4J_PASSWORD}

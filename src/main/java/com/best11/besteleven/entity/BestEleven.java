@@ -54,4 +54,12 @@ public class BestEleven extends BaseTimeEntity {
     public void updateSlot(String titie) {
         this.titie = titie;
     }
+
+    public void replaceSlots(List<BestElevenSlot> newSlots) {
+        this.slots.clear();          // 기존 컬렉션 객체는 유지, 내용만 비움 → orphanRemoval 정상 동작
+        for (BestElevenSlot slot : newSlots) {
+            this.slots.add(slot);
+            slot.assignTo(this);     // 양방향 연관관계 확실히 맞춰줌
+        }
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Best11Application {
 
 	public static void main(String[] args) {
+		System.out.println("JWT_SECRET = " + System.getenv("JWT_SECRET"));
 		SpringApplication.run(Best11Application.class, args);
 	}
 

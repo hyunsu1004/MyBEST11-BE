@@ -7,8 +7,6 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
-public record bestElevenUpdateRequestDto(
-        @NotNull Long formationId,
-        @NotBlank String title,
-        @NotEmpty @Size(min = 11, max = 11) List<slotRequestDto> slots
-) {}
+public record BestElevenCreateRequestDto(@NotNull Long formationId, @NotBlank String title, @NotEmpty @Size(min = 11,max = 11)
+List<SlotRequestDto> slots) {
+}
