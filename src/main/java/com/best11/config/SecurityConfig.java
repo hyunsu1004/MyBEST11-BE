@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/formations/**","/api/leagues/**","/api/players/**").permitAll()
                         .requestMatchers("/swagger-ui/**","/swagger-ui.html","/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/best-elevens/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/formations/**","/api/leagues/**","/api/players/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

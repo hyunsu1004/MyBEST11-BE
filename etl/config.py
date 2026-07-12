@@ -17,6 +17,12 @@ DB_CONFIG = {
      "charset": "utf8mb4",
 }
 
+NEO4J_CONFIG = {
+     "uri": os.getenv("NEO4J_URI"),
+     "user": os.getenv("NEO4J_USER"),
+     "password": os.getenv("NEO4J_PASSWORD"),
+}
+
 #football-data-.org 무료 티어에서 지원하는 대회 코드
 COMPETITIONS = {
      "PL": "Premier League",
