@@ -2,7 +2,7 @@
 
 축구 팬이 원하는 포메이션에 자신만의 베스트 11을 구성하고, 그래프 기반 추천을 받아보는 풀스택 프로젝트입니다.
 
-> 스포츠 데이터 엔지니어링을 지향하며, **관계형 DB(MySQL)와 그래프 DB(Neo4j)를 함께 사용하는 폴리글랏 퍼시스턴스**, **Python ETL 파이프라인**, **Spring Boot 기반 REST API**, **React 프론트엔드**를 엔드투엔드로 직접 설계·구현했습니다.
+> **관계형 DB(MySQL)와 그래프 DB(Neo4j)를 함께 사용하는 폴리글랏 퍼시스턴스**, **Python ETL 파이프라인**, **Spring Boot 기반 REST API**, **React 프론트엔드**를 엔드투엔드로 직접 설계·구현했습니다.
 
 ---
 
@@ -28,7 +28,7 @@
 | Data Pipeline | Python 3.10, pymysql, requests, python-dotenv, neo4j-driver |
 | Frontend | React 19, Vite, React Router, Axios |
 | API 문서화 | springdoc-openapi (Swagger UI) |
-| AI 연동 | LLM API 기반 라인업 평가 코멘트 (연동 예정) |
+| AI 연동 | LLM API 기반 라인업 평가 코멘트 |
 
 ---
 
