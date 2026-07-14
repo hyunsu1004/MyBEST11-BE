@@ -14,9 +14,9 @@ public interface PlayerGraphRepository extends Neo4jRepository<PlayerNode,Long> 
         MATCH (l)<-[:COMPETES_IN]-(t2:Team)<-[:PLAYS_FOR]-(p2:Player)
         WHERE p2.position = p.position AND p2.id <> p.id
         RETURN DISTINCT p2
-        LI  MIT 5
+        LIMIT 5
     """)
-    List<PlayerNode> findSimilarPostionPlayers(@Param("playerId") Long playerId);
+    List<PlayerNode> findSimilarPositionPlayers(@Param("playerId") Long playerId);
 
     @Query("""
         MATCH (p:Player {id: $playerId})-[:PLAYS_FOR]->(t:Team)<-[:PLAYS_FOR]-(teammate:Player)

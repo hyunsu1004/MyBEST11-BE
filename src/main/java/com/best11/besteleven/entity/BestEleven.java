@@ -29,7 +29,7 @@ public class BestEleven extends BaseTimeEntity {
     private Formation formation;
 
     @Column(nullable = false)
-    private String titie;
+    private String title;
 
     @OneToMany(mappedBy = "bestEleven",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<BestElevenSlot> slots =  new ArrayList<>();
@@ -38,7 +38,7 @@ public class BestEleven extends BaseTimeEntity {
     public BestEleven(User user, Formation formation, String titie) {
         this.user = user;
         this.formation = formation;
-        this.titie = titie;
+        this.title = titie;
     }
 
 
@@ -51,8 +51,8 @@ public class BestEleven extends BaseTimeEntity {
         slot.assignTo(this);
     }
 
-    public void updateSlot(String titie) {
-        this.titie = titie;
+    public void updateSlot(String title) {
+        this.title = title;
     }
 
     public void replaceSlots(List<BestElevenSlot> newSlots) {

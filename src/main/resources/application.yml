@@ -5,6 +5,9 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
   neo4j:
     uri: ${NEO4J_URI}
     authentication:
@@ -15,9 +18,9 @@ jwt:
   secret: ${JWT_SECRET}
   expiration-ms: 3600000
 
-anthropic:
-  api-key: ${ANTHROPIC_API_KEY}
-  model: claude-sonnet-4-6
+openai:
+  api-key: ${OPENAI_API_KEY}
+  model: gpt-4o-mini
 ---
 spring:
   config:
@@ -25,8 +28,8 @@ spring:
       on-profile: local
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    defer-datasource-initialization: true
+      ddl-auto: validate
+    #defer-datasource-initialization: true
     show-sql: true
   sql:
     init:

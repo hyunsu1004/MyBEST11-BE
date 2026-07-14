@@ -1,10 +1,13 @@
-import csv
 from config import COMPETITIONS
 from load import (
     get_connection, upsert_league, upsert_team,
     upsert_season, upsert_player, upsert_player_season_stat,
-    load_players_from_csv,
+    load_players_from_csv,create_run_log_table,log_run_start,log_run_finish,
 )
+from logger_config import get_logger
+import csv
+
+logger = get_logger("etl.main")
 
 CURRENT_SEASON = "2025-26"
 TEAMS_CSV_PATH = "teams.csv"
@@ -19,32 +22,50 @@ def load_teams_from_csv(filepath: str) -> list[str]:
 
 def run():
     conn = get_connection()
+    create_run_log_table(conn)
+    run_id = log_run_start(conn,"mysql_load")
 
-    for code, league_name in COMPETITIONS.items():
-        print(f"[{league_name}] 리그 처리 시작")
-        league_id = upsert_league(conn, league_name, "England")
-        season_id = upsert_season(conn, CURRENT_SEASON)
+    rows_processed = 0
 
-        team_names = load_teams_from_csv(TEAMS_CSV_PATH)
+    try:
 
-        for team_name in team_names:
-            team_id = upsert_team(conn, team_name, league_id)
-            print(f"  - {team_name} 처리 중...")
+        for code, league_name in COMPETITIONS.items():
+            logger.info(f"[{league_name}] : 리그처리 시작")
+            #print(f"[{league_name}] 리그 처리 시작")
 
-            players = load_players_from_csv(PLAYERS_CSV_PATH, team_name)
-            if not players:
-                print(f"    (CSV에 등록된 선수 없음 - 건너뜀)")
-                continue
+            league_id = upsert_league(conn, league_name, "England")
+            season_id = upsert_season(conn, CURRENT_SEASON)
 
-            for player in players:
-                player_id = upsert_player(
-                    conn, player["name"], player["nationality"], player["primary_position"]
-                )
-                upsert_player_season_stat(conn, player_id, team_id, season_id)
-            print(f"    선수 {len(players)}명 적재 완료")
+            team_names = load_teams_from_csv(TEAMS_CSV_PATH)
 
-    conn.close()
-    print("ETL 완료")
+            for team_name in team_names:
+                team_id = upsert_team(conn, team_name, league_id)
+                logger.info(f" -{team_name} 처리 중 ...")
+                #print(f"  - {team_name} 처리 중...")
+
+                players = load_players_from_csv(PLAYERS_CSV_PATH, team_name)
+                if not players:
+                    logger.warning(f"  (CSV에 등록된 선수 없음 - 건너뜀)")
+                    #print(f"    (CSV에 등록된 선수 없음 - 건너뜀)")
+                    continue
+
+                for player in players:
+                    player_id = upsert_player(
+                        conn, player["name"], player["nationality"], player["primary_position"]
+                    )
+                    upsert_player_season_stat(conn, player_id, team_id, season_id)
+                    rows_processed += 1
+                logger.info(f"   선수 {len(players)} 명 적재 완료")
+                #print(f"    선수 {len(players)}명 적재 완료")
+        log_run_finish(conn, run_id,"SUCCESS",rows_processed)
+        logger.info(f"ETL 완료 (처리 row : {rows_processed})")
+
+    except Exception as e:
+        log_run_finish(conn,run_id,"FAILED",rows_processed,str(e))
+        logger.error(f"ETL 실패 : {e}")
+        raise
+    finally:
+        conn.close()
 
 
 if __name__ == "__main__":

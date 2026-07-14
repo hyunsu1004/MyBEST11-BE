@@ -8,7 +8,7 @@ public class Best11Application {
 
 	public static void main(String[] args) {
 		System.out.println("JWT_SECRET = " + System.getenv("JWT_SECRET"));
-		System.out.println("ANTHROPIC_API_KEY = " + System.getenv("ANTHROPIC_API_KEY"));
+		System.out.println("OPEN_API_KEY = " + System.getenv("OPENAI_API_KEY"));
 
 		SpringApplication.run(Best11Application.class, args);
 	}

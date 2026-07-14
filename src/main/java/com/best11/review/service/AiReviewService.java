@@ -5,7 +5,7 @@ import com.best11.besteleven.entity.BestElevenSlot;
 import com.best11.besteleven.repository.BestElevenRepository;
 import com.best11.common.exception.CustomException;
 import com.best11.common.exception.ErrorCode;
-import com.best11.review.dto.request.AnthropicClient;
+import com.best11.review.client.OpenAiClient;
 import com.best11.review.dto.response.ReviewResponse;
 import com.best11.review.entity.BestElevenReview;
 import com.best11.review.repository.BestElevenReviewRepository;
@@ -21,7 +21,7 @@ public class AiReviewService {
 
     private final BestElevenReviewRepository bestReviewRepository;
     private final BestElevenRepository bestElevenRepository;
-    private final AnthropicClient anthropicClient;
+    private final OpenAiClient openAiClient;
 
     @Transactional
     public ReviewResponse createReview(Long userId, Long bestElevenId) {
@@ -33,7 +33,7 @@ public class AiReviewService {
         }
 
         String prompt = buildPrompt(bestEleven);
-        String aiComment = anthropicClient.sendMessage(prompt);
+        String aiComment = openAiClient.sendMessage(prompt);
 
         BestElevenReview review = bestReviewRepository.save(
                 BestElevenReview.builder().bestEleven(bestEleven).content(aiComment).build());

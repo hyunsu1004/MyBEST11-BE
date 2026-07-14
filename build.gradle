@@ -43,6 +43,10 @@ dependencies {
 	// neo4j
 	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
 
+	//flyway
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-mysql'
+
 }
 
 tasks.named('test') {

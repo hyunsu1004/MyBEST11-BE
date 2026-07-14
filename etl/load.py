@@ -3,6 +3,41 @@ import csv
 from config import DB_CONFIG
 
 
+def create_run_log_table(conn):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS etl_run_log (
+                id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                pipeline_name VARCHAR(50) NOT NULL,
+                started_at DATETIME NOT NULL,
+                finished_at DATETIME,
+                status VARCHAR(20) NOT NULL,
+                rows_processed INT DEFAULT 0,
+                error_message TEXT
+                )
+        """)
+        conn.commit()
+
+
+def log_run_start(conn,pipeline_name):
+    with  conn.cursor() as cursor:
+        cursor.execute("INSERT INTO etl_run_log (pipeline_name, started_at, status) VALUES (%s, NOW(), 'RUNNING')",
+                       (pipeline_name,)
+        )
+        conn.commit()
+        return cursor.lastrowid
+
+def log_run_finish(conn,run_id,status,rows_processed,error_message = None):
+    with conn.cursor() as cursor:
+        cursor.execute(
+            """UPDATE etl_run_log
+               SET finished_at = NOW(), status = %s, rows_processed = %s, error_message = %s
+               WHERE id = %s""",
+            (status, rows_processed, error_message, run_id)
+        )
+        conn.commit()
+
+
 
 def get_connection():
     return pymysql.connect(**DB_CONFIG)

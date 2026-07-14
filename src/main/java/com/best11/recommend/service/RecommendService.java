@@ -18,7 +18,7 @@ public class RecommendService {
 
     @Transactional("transactionManager")
     public List<RecommendedPlayerResponseDto> recommendSimilarPosition(Long playerId){
-        return playerGraphRepository.findSimilarPostionPlayers(playerId).stream()
+        return playerGraphRepository.findSimilarPositionPlayers(playerId).stream()
                 .map(this::toResponse)
                 .toList();
 

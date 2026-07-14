@@ -140,7 +140,7 @@ public class BestElevenService {
                 )).toList();
 
         return new BestElevenResponseDto(
-                bestEleven.getId(), bestEleven.getTitie(), bestEleven.getFormation().getId(),
+                bestEleven.getId(), bestEleven.getTitle(), bestEleven.getFormation().getId(),
                 slots, bestEleven.getCreatedAt()
         );
     }
