@@ -140,6 +140,9 @@ erDiagram
 
 Neo4j 그래프 모델은 `(Player)-[:PLAYS_FOR]->(Team)-[:COMPETES_IN]->(League)` 구조로 MySQL 데이터를 미러링하며, 관계 탐색 전용으로 활용합니다.
 
+<img width="1103" height="526" alt="visualisation (1)" src="https://github.com/user-attachments/assets/41925147-841c-414c-be7d-269bf213700e" />
+
+
 ---
 
 ## 핵심 기능
