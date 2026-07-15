@@ -1,0 +1,4 @@
+git{
+  "provider": "java",
+  "jdkVersion": "17"
+}
