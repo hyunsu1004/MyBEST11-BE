@@ -44,3 +44,6 @@ etl/venv/
 etl/__pycache__/
 etl/*.pyc
 etl/.env
+
+node_modules/
+frontend/node_modules/
