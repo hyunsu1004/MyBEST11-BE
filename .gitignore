@@ -47,3 +47,4 @@ etl/.env
 
 node_modules/
 frontend/node_modules/
+frontend/.env.production
