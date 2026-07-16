@@ -86,6 +86,14 @@ flowchart TB
 - LLM 기반 라인업 전술 평가 코멘트
 - Python ETL 파이프라인 (upsert 패턴, 재실행 안전성 확보)
 
+## neo4j를 활용한 선수 또는 팀들간 관계 시각화
+
+  <img width="1103" height="526" alt="visualisation (1)" src="https://github.com/user-attachments/assets/d5921a04-4a9a-4a1d-a366-421432956747" />
+
+## 내가 구상한 BEST 11 의 AI 코멘트
+<img width="428" height="846" alt="Best11  최종 화면" src="https://github.com/user-attachments/assets/77271f74-0c56-4d0a-9694-ea0a3f25946d" />
+
+
 ---
 
 ## 트러블슈팅 & 문제 해결
@@ -155,7 +163,6 @@ flowchart TB
 
 ## 회고
 
-이 프로젝트를 통해 다음을 실무 수준으로 경험했습니다.
 
 - **폴리글랏 퍼시스턴스**: 단일 DB로는 자연스럽지 않은 요구사항(관계 탐색)을 그래프DB로 분리 설계하고, 그 과정에서 발생하는 트랜잭션 경계 문제를 직접 해결
 - **데이터 파이프라인 설계**: 외부 API 제약이라는 현실적 문제에 부딪혔을 때, 목표에 맞게 전략을 전환하는 실용적 판단
