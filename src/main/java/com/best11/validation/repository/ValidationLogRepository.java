@@ -13,7 +13,7 @@ public interface ValidationLogRepository extends JpaRepository<ValidationLog, Lo
 
     List<ValidationLog> findTop50ByOrderByCheckedAtDesc();
 
-    @Query("SELECT DISTINCT v.runId FROM ValidationLog v ORDER BY MAX(v.checkedAt) DESC")
+    @Query("SELECT v.runId FROM ValidationLog v GROUP BY v.runId ORDER BY MAX(v.checkedAt) DESC")
     List<String> findRecentRunIds();
 
     @Query("SELECT v FROM ValidationLog v WHERE v.status = 'FAIL' ORDER BY v.checkedAt DESC")
