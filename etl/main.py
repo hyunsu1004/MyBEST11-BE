@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from config import COMPETITIONS
 from load import (
     get_connection, upsert_league, upsert_team,
@@ -6,6 +7,9 @@ from load import (
 )
 from logger_config import get_logger
 import csv
+
+load_dotenv()
+
 
 logger = get_logger("etl.main")
 
