@@ -14,6 +14,15 @@ spring:
       username: ${NEO4J_USERNAME}
       password: ${NEO4J_PASSWORD}
 
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+# 로컬 개발 시에는 위 기본값(localhost:6379)이 그대로 Docker의 best11-redis를 가리킵니다.
+# 나중에 실제 배포(Railway 등)에 Redis를 올리게 되면, 그때는 환경변수
+# REDIS_HOST, REDIS_PORT 를 배포 환경의 Redis 접속 정보로 덮어써주기만 하면
+# 코드 수정 없이 그대로 동작합니다.
 
 server:
   forward-headers-strategy: framework

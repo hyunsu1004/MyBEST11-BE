@@ -1,3 +1,10 @@
+"""
+데이터 품질 검증 모듈
+
+기존 etl/main.py (CSV -> MySQL), etl/sync_neo4j.py (MySQL -> Neo4j) 실행 직후
+호출해서 결과를 validation_log 테이블에 기록한다.
+"""
+
 import uuid
 import datetime
 from typing import List, Optional
@@ -10,7 +17,7 @@ class ValidationRunner:
         self.conn = mysql_conn
         self.run_id = run_id or str(uuid.uuid4())
         self.step = step
-        self.results = []
+        self.results = []  # [(check_name, status, detail)]
 
     def check_row_count(self, table: str, min_rows: int = 1):
         cursor = self.conn.cursor()

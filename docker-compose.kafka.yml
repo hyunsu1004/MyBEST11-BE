@@ -1,0 +1,47 @@
+services:
+  kafka:
+    image: apache/kafka:3.7.0
+    hostname: kafka
+    container_name: best11-kafka
+    ports:
+      - "9092:9092"       # 외부(로컬 PC)에서 접속하는 포트
+      - "9094:9094"       # 컨테이너 간 내부 통신 포트
+    environment:
+      # KRaft 모드: Zookeeper 없이 Kafka 단독으로 클러스터 메타데이터 관리
+      - KAFKA_NODE_ID=1
+      - KAFKA_PROCESS_ROLES=broker,controller
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_LISTENERS=PLAINTEXT://:9094,CONTROLLER://:9093,EXTERNAL://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9094,EXTERNAL://localhost:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1
+    volumes:
+      - kafka-data:/tmp/kraft-combined-logs
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: best11-kafka-ui
+    ports:
+      - "8081:8080"       # 브라우저로 http://localhost:8081 접속해서 토픽/메시지 시각적으로 확인
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=best11-local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9094
+    depends_on:
+      - kafka
+
+  redis:
+    image: redis:7-alpine
+    container_name: best11-redis
+    ports:
+      - "6379:6379"        # 로컬 PC에서 접속하는 기본 Redis 포트
+    volumes:
+      - redis-data:/data
+    command: redis-server --save 60 1   # 60초마다 변경사항 있으면 디스크에 저장 (컨테이너 재시작 시 데이터 유지)
+
+volumes:
+  kafka-data:
+  redis-data:
