@@ -130,7 +130,8 @@ flowchart TB
 <img width="1889" height="558" alt="스크린샷 2026-07-20 210341" src="https://github.com/user-attachments/assets/ba0e9410-22af-4204-856b-5684a2c474e7" />
 
 ETL 실행 이력별로 검증 항목(ROW_COUNT / NULL_RATIO / DUPLICATE / SCHEMA / CONSISTENCY)의 PASS/FAIL 결과를 시각화. 실패 시 Slack으로 자동 알림.
-![Uploading image.png…]()
+
+<img width="1365" height="685" alt="스크린샷 2026-07-22 191907" src="https://github.com/user-attachments/assets/42447513-2686-4678-8835-07673291148f" />
 
 
 ## 실시간 경기 스코어보드
