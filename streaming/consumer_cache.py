@@ -34,10 +34,21 @@ logger = logging.getLogger("streaming.consumer_cache")
 KAFKA_BOOTSTRAP_SERVERS = os.environ.get("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 TOPIC = "match-events"
 
+REDIS_URL = os.environ.get("REDIS_URL")
 REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.environ.get("REDIS_PORT", "6379"))
+REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD")
 
-r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
+if REDIS_URL:
+    # Railway 등에서 제공하는 전체 접속 URL 형태 (redis://default:비번@호스트:포트)
+    r = redis.from_url(REDIS_URL, decode_responses=True)
+else:
+    r = redis.Redis(
+        host=REDIS_HOST,
+        port=REDIS_PORT,
+        password=REDIS_PASSWORD,  # 로컬처럼 비밀번호 없는 환경이면 None이 되어 자동으로 무시됨
+        decode_responses=True,
+    )
 
 
 def redis_key(match_id) -> str:
